@@ -8,9 +8,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 public class DiningReviewResponse {
-    private Long id;
-    private Long userId;
-    private Long restaurantId;
+    private String username;
     private Double rating;
     private String commentary;
 }

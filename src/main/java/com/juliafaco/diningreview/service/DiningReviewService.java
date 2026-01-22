@@ -12,6 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class DiningReviewService {
     private final DiningReviewRepository diningReviewRepository;
@@ -22,14 +25,14 @@ public class DiningReviewService {
     public DiningReviewService(DiningReviewRepository diningReviewRepository,
                                UserRepository userRepository,
                                RestaurantRepository restaurantRepository,
-                               RestaurantService restaurantService){
+                               RestaurantService restaurantService) {
         this.diningReviewRepository = diningReviewRepository;
         this.userRepository = userRepository;
         this.restaurantRepository = restaurantRepository;
         this.restaurantService = restaurantService;
     }
 
-    public DiningReviewResponse submitReview(DiningReviewRequest diningReviewRequest){
+    public void submitReview(DiningReviewRequest diningReviewRequest) {
 
         User user = userRepository.findById(diningReviewRequest.getUserId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
@@ -46,12 +49,23 @@ public class DiningReviewService {
 
         restaurantService.updateRating(restaurant.getId());
 
-        return new DiningReviewResponse
-                (savedDiningReview.getId(),
-                        user.getId(),
-                        restaurant.getId(),
-                        savedDiningReview.getRating(),
-                        savedDiningReview.getCommentary());
 
     }
+
+    public List<DiningReviewResponse> getReviewsList(Long restaurantId){
+       List<DiningReview> diningReviews = diningReviewRepository.findByRestaurantId(restaurantId);
+
+       List<DiningReviewResponse> responses = new ArrayList<>();
+
+        for(DiningReview diningReview : diningReviews){
+            responses.add(new DiningReviewResponse(
+                    diningReview.getUser().getUsername(),
+                    diningReview.getRating(),
+                    diningReview.getCommentary()
+            ));
+        }
+
+        return responses;
+    }
+
 }

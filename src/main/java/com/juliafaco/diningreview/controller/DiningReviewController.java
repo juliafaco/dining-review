@@ -18,7 +18,7 @@ public class DiningReviewController {
     }
 
     @PostMapping
-    public DiningReviewResponse submitReview(@RequestBody DiningReviewRequest diningReviewRequest) {
-        return diningReviewService.submitReview(diningReviewRequest);
+    public void submitReview(@RequestBody DiningReviewRequest diningReviewRequest) {
+        diningReviewService.submitReview(diningReviewRequest);
     }
 }

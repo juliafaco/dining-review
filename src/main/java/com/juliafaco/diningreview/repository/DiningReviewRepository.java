@@ -10,4 +10,6 @@ import java.util.List;
 
 public interface DiningReviewRepository extends JpaRepository<DiningReview, Long> {
     List<DiningReview> findByRestaurantId(Long restaurantId);
+
+
 }

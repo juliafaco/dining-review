@@ -1,7 +1,6 @@
 package com.juliafaco.diningreview.model;
 
 
-import com.juliafaco.diningreview.enums.ReviewStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,10 +31,6 @@ public class DiningReview {
 
     @Column(name = "commentary", nullable = true)
     private String commentary;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "admin_review", nullable = false)
-    private ReviewStatus review = ReviewStatus.PENDING;
 
 
     public DiningReview(User user, Restaurant restaurant, Double rating, String commentary) {

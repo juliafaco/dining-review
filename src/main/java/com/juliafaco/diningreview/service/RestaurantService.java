@@ -79,4 +79,10 @@ public class RestaurantService {
         restaurantRepository.save(restaurant);
     }
 
+    public void deleteRestaurant(Long restaurantId){
+        if(!restaurantRepository.existsById(restaurantId)){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Restaurant not found");
+        }
+        restaurantRepository.deleteById(restaurantId);
+    }
 }
