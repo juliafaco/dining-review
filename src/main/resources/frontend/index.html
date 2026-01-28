@@ -2,9 +2,46 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Restaurants</title>
+    <style>
+        body {
+            color: #ffffff;
+            background-color: #3a3a3a;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .div {
+            color: #550d18;
+        }
+    </style>
 </head>
 <body>
+    <h2 style="color: #ffffff; background-color: red">Restaurantes</h2>
+    <div class="div">
+        <button id="btn">Buscar</button>
+    </div>
+    <div id="lista"></div>
 
+    <script>
+        const botao = document.getElementById('btn');
+        const lista = document.getElementById('lista');
+        const BACKEND_URL = 'http://localhost:8080/diningreview/restaurants';
+
+        botao.addEventListener('click', async (e) => {
+            const response = await fetch(BACKEND_URL);
+            const data = await response.json();
+
+            lista.innerHTML = '';
+            data.forEach(restaurant => {
+                const div = document.createElement('div');
+                div.innerText = `${restaurant.name} - Nota: ${restaurant.rating}`;
+                lista.appendChild(div);
+            });
+        });
+
+    </script>
 </body>
 </html>

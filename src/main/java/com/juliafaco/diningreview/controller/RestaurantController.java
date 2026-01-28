@@ -28,6 +28,7 @@ public class RestaurantController {
     }
 
     @GetMapping
+    @CrossOrigin(origins = "*")
     public List<RestaurantSimpleResponse> getAllRestaurants(){
         return restaurantService.getAllRestaurants();
     }
